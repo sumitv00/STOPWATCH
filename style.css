@@ -1,6 +1,7 @@
 *{
-    margin:0%;
-    padding:0%;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
 }
 
 .container{
@@ -20,7 +21,11 @@
     align-items: center;
     text-align: center;
     gap: 20px;
+}
 
+.clock div {
+    display: flex;
+    gap: 20px;
 }
 
 button{
@@ -29,15 +34,14 @@ button{
     border:none;
     box-shadow:  0 0 10px rgba(0,0,0,0.3);
     background-color:white;
-    margin:30ox;
+    margin:0;
     cursor:pointer;
     font: 100 1.5rem sans-serif;
     border-radius:50px;
-
+    transition: background 0.2s, color 0.2s;
 }
 
 button:hover{
     background-color:rgb(50,50,50);
     color:#fff;
-
 }

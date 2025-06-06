@@ -1,8 +1,19 @@
-const timeDisplay = document.querySelector('.time'); // Select only the time element
-let second = 0, min = 0, hr = 0;
-let intervalId;
+const timeDisplay = document.querySelector('.time');
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
 
-const startStopwatch = () => {
+let second = 0, min = 0, hr = 0;
+let intervalId = null;
+
+function updateDisplay() {
+    const seconds = String(second).padStart(2, "0");
+    const minutes = String(min).padStart(2, "0");
+    const hours = String(hr).padStart(2, "0");
+    timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+function startStopwatch() {
+    if (intervalId) return; // Prevent multiple intervals
     intervalId = setInterval(() => {
         second++;
         if (second > 59) {
@@ -13,23 +24,26 @@ const startStopwatch = () => {
             min = 0;
             hr++;
         }
-        const seconds = String(second).padStart(2, "0");
-        const minutes = String(min).padStart(2, "0");
-        const hours = String(hr).padStart(2, "0");
-        timeDisplay.textContent = `${hours}:${minutes}:${seconds}`; // Update only the time
+        updateDisplay();
     }, 1000);
-};
+}
 
-const stopStopwatch = () => {
+function stopStopwatch() {
     clearInterval(intervalId);
-};
-const resetStopwatch = () => {
-    clearInterval(intervalId);
+    intervalId = null;
+}
+
+function resetStopwatch() {
+    stopStopwatch();
     second = 0;
     min = 0;
     hr = 0;
-    timeDisplay.textContent = "00:00:00"; 
-};
+    updateDisplay();
+}
 
-const stopButton = document.querySelector('button[onclick="stopStopwatch()"]');
-stopButton.addEventListener('dblclick', resetStopwatch);
+startBtn.addEventListener('click', startStopwatch);
+stopBtn.addEventListener('click', stopStopwatch);
+stopBtn.addEventListener('dblclick', resetStopwatch);
+
+// Initialize display
+updateDisplay();
